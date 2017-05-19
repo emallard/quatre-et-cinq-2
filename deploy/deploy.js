@@ -17,10 +17,9 @@ console.log('clean ' + targetDir);
 //child_process.execSync('git clean -d -x -f', { cwd: targetDir });
 var files = fs.readdirSync(targetDir);
 files.forEach((f) => {
-    if (f != '.git')
+    if (f != '.git' && f != '.gitignore')
     {
-        //rimraf.sync(path.join(targetDir, f))
-        console.log(path.join(targetDir, f))
+        rimraf.sync(path.join(targetDir, f))
     }
 });
 
@@ -30,8 +29,8 @@ files.forEach((f) => {
 
 /*
 child_process.execSync('npm install', { cwd: sourceClientDir, stdio:[0,1,2] });
-child_process.execSync('ng build', { cwd: sourceClientDir, stdio:[0,1,2] });
 */
+//child_process.execSync('ng build --target=production --environment=prod', { cwd: sourceClientDir, stdio:[0,1,2] });
 fse.copySync(path.join(sourceClientDir, 'dist'), path.join(targetDir, 'client', 'dist'));
 
 /*
@@ -39,4 +38,8 @@ child_process.execSync('npm install', { cwd: sourceServerDir, stdio:[0,1,2] });
 child_process.execSync('tsc', { cwd: sourceServerDir, stdio:[0,1,2] });
 */
 fse.copySync(path.join(sourceServerDir, 'out-tsc'), path.join(targetDir, 'server', 'out-tsc'));
-fse.copySync(path.join(sourceServerDir, 'package.json'), path.join(targetDir, 'server', 'package.json'));
+
+// package.json : adaptation du "start""
+var packageJson = fs.readFileSync(path.join(sourceServerDir, 'package.json'), 'utf8');
+packageJson = packageJson.replace('"start": "node ./out-tsc/start.js"', '"start": "node ./server/out-tsc/start.js"');
+fs.writeFileSync(path.join(targetDir, 'package.json'), packageJson);

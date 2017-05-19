@@ -12,7 +12,8 @@ import { EdService } from "app/ed/edService";
 export class EditeurComponent implements OnInit {
 
     private editor:editor;
-    private editorControllers:editorControllers;
+    editorControllers:editorControllers;
+    
     constructor(private edService:EdService) { }
 
     ngOnInit() {
