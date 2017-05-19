@@ -7,7 +7,7 @@ const rimraf = require('rimraf');
 
 var targetDir = path.join(__dirname, '..', '..', 'default');
 
-var sourceDir = path.join(targetDir, '..');
+var sourceDir = path.join(__dirname, '..');
 var sourceClientDir = path.join(sourceDir, 'client');
 var sourceServerDir = path.join(sourceDir, 'server');
 
@@ -34,8 +34,9 @@ child_process.execSync('ng build', { cwd: sourceClientDir, stdio:[0,1,2] });
 */
 fse.copySync(path.join(sourceClientDir, 'dist'), path.join(targetDir, 'client', 'dist'));
 
-
+/*
 child_process.execSync('npm install', { cwd: sourceServerDir, stdio:[0,1,2] });
 child_process.execSync('tsc', { cwd: sourceServerDir, stdio:[0,1,2] });
+*/
 fse.copySync(path.join(sourceServerDir, 'out-tsc'), path.join(targetDir, 'server', 'out-tsc'));
-fse.copySync(path.join(sourceServerDir, 'package.json'), path.join(targetDir, 'package.json'));
+fse.copySync(path.join(sourceServerDir, 'package.json'), path.join(targetDir, 'server', 'package.json'));
