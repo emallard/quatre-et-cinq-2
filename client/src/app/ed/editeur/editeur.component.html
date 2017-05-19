@@ -1,0 +1,77 @@
+
+    <link rel="stylesheet" href="/assets/libs/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="/assets/css/flyout.css">
+
+    <div id="header-wrapper">        
+        <div class="toolbar">
+            <nav>
+                <ul>
+                    <!--
+                    <li><a>File</a>
+                    <ul>
+                        <li><a data-bind="click: menuSave">Save</a></li>
+                        <li><a data-bind="click: menuNew">New</a></li>
+                        <li><a data-bind="click: menuOpen">Open</a></li>
+                    </ul>        
+                    </li>
+                    -->
+                    <li><a (click)="showImportToolbar()" [ngClass]="{'active': importToolbarVisible }">2D</a></li>
+                    <li><a (click)="showModifyToolbar()" [ngClass]="{'active': modifyToolbarVisible }">Edit</a></li>
+                    <!--
+                    <li><a (click)="showEnvironmentToolbar()" [ngClass]="{'active': environmentToolbarVisible }">Scene</a></li>
+                    <li><a (click)="showPhotoToolbar()" [ngClass]="{'active': photoToolbarVisible }">Share</a></li>
+                    <li><a (click)="showPrintToolbar()" [ngClass]="{'active': printToolbarVisible }">Print</a></li>
+                    -->
+                </ul>
+            </nav>
+            <img src="/assets/css/images/logo.svg" height="60" style='float:right; margin-top:-50px; margin-right:40px;'>
+        </div>
+
+        <div id="banner">
+            <div class="container">
+            </div>
+        </div>
+    </div>
+                
+    <div class='screen'>
+
+        <div class='renderPanel'>
+            <div class='renderContainer' id='rendererElement' 
+            (mousedown)="editorControllers.onMouseDown($event)"
+            (mousemove)="editorControllers.onMouseMove($event)"
+            (mouseup)="editorControllers.onMouseUp($event)"
+            (wheel)="editorControllers.onMouseWheel($event)"
+            (contextmenu)="editorControllers.onContextMenu()"
+            data-bind="setElement: initEditor, event: { mousedown: onMouseDown, mousemove: onMouseMove, mouseup: onMouseUp, wheel: onMouseWheel, DOMMouseScroll:controllerManager.onMouseWheel }"></div>
+        </div>
+
+
+        <div class="debug"></div>
+
+        <div class="secondToolbar"> <!--data-bind="visible: modifyToolbarVisible"-->
+            <a (click)="editorControllers.setSelectControllers()"
+                data-bind="click: setSelectController, css : {active : isSelectControllerActive}" ><img src="assets/css/images/mouse-cursor.svg"></a>
+            <a (click)="editorControllers.setMoveController()"   
+                data-bind="click: setMoveController, css : {active : isMoveControllerActive}" ><img src="assets/css/images/mouse-move.svg"></a>
+            <a (click)="editorControllers.setScaleController()"
+                data-bind="click: setScaleController, css : {active : isScaleControllerActive}"><img src="assets/css/images/mouse-scale.svg"></a>
+            <a (click)="editorControllers.setScaleBottomController()"
+                data-bind="click: setScaleBottomController, css : {active : isScaleBottomControllerActive}"><img src="assets/css/images/mouse-scale-bottom.svg"></a>    
+        </div>
+
+        <div class="selectedToolWrapper">
+        </div>
+
+        <div class="selectedTool">
+<!--            
+            <div data-bind="visible: modifyToolbarVisible">
+                <h2>Edit</h2>
+            </div>
+-->
+            <div [hidden]="!importToolbarVisible">
+              <app-import></app-import>
+            </div>
+        </div>
+    </div>
+    

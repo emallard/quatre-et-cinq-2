@@ -1,0 +1,27 @@
+<h2>2D</h2>
+Selectionner un fichier SVG
+<br/>
+<input class="btnImport" type="file" name="importFile" (change)="onFileChange($event)">
+
+Ou déposez ici :
+<div class="dropZone" 
+    (drop)="onDrop($event)"
+    (dragover)="onDragOver($event)">
+    Drop Zone
+</div>
+SVGs importés:
+<div *ngFor="let importedSvg of importedSvgs">
+
+    <button style="margin:5px" class="btn btn-default" (click)="importedSvg.onClick()" data-bind="css : { 'btn-active-border': isActive }">
+      <div style="float:left">
+          <img style="max-width:100px;max-height:100px" [src]="sanitizer.bypassSecurityTrustResourceUrl(importedSvg.src)">
+      </div>
+      <!--
+      <div style="float:right">
+          <button class="fa fa-trash-o" data-bind="click: remove"></button>
+          <br/>
+      </div>
+      <div style="clear: both"></div>
+      -->
+  </button>
+</div>
