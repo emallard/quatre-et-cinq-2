@@ -20,6 +20,7 @@ import { workspace } from './workspace';
 import { sdUnion } from '../scene/sdUnion';
 import { sdSubtraction } from '../scene/sdSubtraction';
 import { vec3 } from "gl-matrix";
+import {saveAs as importedSaveAs} from "file-saver";
 
 declare var zip;
 
@@ -291,8 +292,6 @@ declare var zip;
 
         updateLoop()
         {
-            this.editorControllers.updateLoop();
-
             if (this.updateFlag)
             {
                 this.updateSprites();
@@ -342,6 +341,16 @@ declare var zip;
         {
             this.signedDistanceToTriangles.compute(this.getAllSd(), 50, 50, 50, 1);
             return this.exportOBJ.getText(this.signedDistanceToTriangles.triangles, this.signedDistanceToTriangles.normals, this.signedDistanceToTriangles.colors);
+        }
+
+        downloadOBJAsZip() {
+            console.log('hop');
+            this.computeOBJAsZip(100, 100, 100, 1, content => 
+            {
+                var blob = new Blob([content], {type: 'application//octet-binary'});
+                importedSaveAs(blob, "exportObj.zip");
+            });
+                
         }
 
         computeOBJAsZip(icount:number, jcount:number, kcount:number, multiplier:number, done:(content:any)=>void)

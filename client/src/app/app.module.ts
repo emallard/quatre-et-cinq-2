@@ -12,6 +12,8 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { ContactComponent } from './contact/contact.component';
 import { NavpagesComponent } from './navpages/navpages.component';
 import { EditeurTestComponent } from './editeur-test/editeur-test.component';
+import { ConnexionComponent } from './connexion/connexion.component';
+import { MenuUtilisateurComponent } from './menu-utilisateur/menu-utilisateur.component';
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import { EditeurTestComponent } from './editeur-test/editeur-test.component';
     ContactComponent,
     NavpagesComponent,
     EditeurTestComponent,
+    ConnexionComponent,
+    MenuUtilisateurComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,8 @@ import { EditeurTestComponent } from './editeur-test/editeur-test.component';
     RouterModule.forRoot([
       {path: '', component:AccueilComponent},
       {path: 'contact', component:ContactComponent},
-      {path: 'editeur-test', component:EditeurTestComponent}
+      {path: 'editeur-test', component:EditeurTestComponent},
+      {path: 'connexion', component:ConnexionComponent},
     ])
   ],
   providers: [],

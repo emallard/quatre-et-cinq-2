@@ -10,6 +10,8 @@ export class selectController implements iController {
         collide = new renderCollide(); 
         editor:editor = inject(editor);
         
+        onSetSelectedIndex : (index:number)=>void;
+
         set()
         {
         }
@@ -78,6 +80,7 @@ export class selectController implements iController {
 
             if (iMin > -1)
             {
+                this.onSetSelectedIndex(iMin);
                 //this.editorView.setSelectedIndex(iMin);
             }
             

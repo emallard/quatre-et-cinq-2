@@ -5,6 +5,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule }   from '@angular/router';
 import { MouseWheelDirective } from './mouse-wheel.directive';
+import { PrintComponent } from './print/print.component';
+import { EditComponent } from './edit/edit.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileExamplesComponent } from './profile-examples/profile-examples.component';
 
 @NgModule({
   imports: [
@@ -16,7 +20,11 @@ import { MouseWheelDirective } from './mouse-wheel.directive';
   declarations: [
     EditeurComponent,
     ImportComponent,
-    MouseWheelDirective
+    MouseWheelDirective,
+    PrintComponent,
+    EditComponent,
+    ProfileComponent,
+    ProfileExamplesComponent
   ],
   providers: [EdService]
 })

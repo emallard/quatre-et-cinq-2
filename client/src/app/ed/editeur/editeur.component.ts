@@ -4,6 +4,8 @@ import { resources } from "lib4et5/tools/resources";
 import { editor } from "lib4et5/editor/editor";
 import { EdService } from "app/ed/edService";
 
+declare var zip;
+
 @Component({
     selector: 'app-editeur',
     templateUrl: './editeur.component.html',
@@ -11,22 +13,27 @@ import { EdService } from "app/ed/edService";
 })
 export class EditeurComponent implements OnInit {
 
-    private editor:editor;
+    editor:editor;
     editorControllers:editorControllers;
     
     constructor(private edService:EdService) { }
 
     ngOnInit() {
 
-          this.editor = this.edService.editor();
-          this.editorControllers = this.editor.editorControllers;
-          this.editor.loadResourcesAndInit(document.getElementById('rendererElement'), () =>this.afterLoad());   
+        this.edService.editeurComponent = this;
+
+        this.editor = this.edService.editor();
+        this.editorControllers = this.editor.editorControllers;
+        this.editor.loadResourcesAndInit(document.getElementById('rendererElement'), () =>this.afterLoad());
+
+        zip.workerScriptsPath = "/assets/js/";
+
     }
 
     afterLoad()
     {
         this.editor.setRenderFlag();
-        this.updateLoop();
+        this.edService.UpdateLoop();
     }
 
     // Toolbar
@@ -56,18 +63,5 @@ export class EditeurComponent implements OnInit {
     // Controllers
     /////////////////
 
-   
-
-    // Loop
-    /////////////////
-
-    private updateLoop()
-    {
-        //this.controllerManager.updateLoop();
-        //this.profileView.updateLoop();
-        //this.animateLoop();
-        this.editor.updateLoop();
-        requestAnimationFrame(()=>this.updateLoop());
-    }
 
 }

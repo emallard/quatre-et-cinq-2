@@ -1,0 +1,13 @@
+<input type="radio" [checked]="isLines" (change)="setAsLines()">Lines
+<input style="margin-left:20px" type="radio" [checked]="isSmooth" (change)="setAsSmooth()">Curves<br>
+
+<canvas #profileCanvas></canvas>
+
+<div data-bind="with: profileExamples">
+    <button data-bind="click: toggleVisible">Examples</button><br/>
+    <div data-bind="visible: visible">
+        <div data-bind="foreach : examples">
+            <button data-bind="setElement: setContainer, click:click" style="padding:0px;display:inline-block"></button>
+        </div>
+    </div>
+</div>

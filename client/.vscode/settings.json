@@ -9,6 +9,7 @@
         "**/*.d.ts": true,
         "**/node_modules":true,
         "**/typings":false,
-        "**/libs":true
+        "**/libs":false
+        
     }
 }

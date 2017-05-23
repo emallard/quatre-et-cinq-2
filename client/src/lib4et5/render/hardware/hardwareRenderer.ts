@@ -95,7 +95,7 @@ import * as THREE from "three";
                 + generatedLight
                 + resources.all['/assets/shaders/30_renderPixel.glsl'];
             
-            console.log(generatedPart);
+            //console.log(generatedPart);
             //console.log(generatedLight);
 
             this.gViewQuad.material.fragmentShader = this.fragmentShader;

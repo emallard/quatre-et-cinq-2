@@ -11,6 +11,9 @@ import { editorObject } from "../editorObject";
 
         editor:editor = inject(editor);
 
+        onSetSelectedIndex : (index:number)=>void;
+        onProfileRefresh : ()=>void;
+
         isMouseDown = false;
         updateFlag = false;
         startX = 0;
@@ -106,7 +109,7 @@ import { editorObject } from "../editorObject";
 
                 if (this.isScaleMode)
                 {
-                    //this.profileView.refresh();
+                    this.onProfileRefresh();
                 }
             }
         }
@@ -133,7 +136,7 @@ import { editorObject } from "../editorObject";
 
             if (!this.collide.hasCollided)
             {
-                //this.editorView.setSelectedIndex(-1);
+                this.onSetSelectedIndex(-1);
             }
             else 
             {
@@ -149,7 +152,7 @@ import { editorObject } from "../editorObject";
 
                 vec4.copy(this.startBounds, this.selected.profileBounds); 
 
-                //this.editorView.setSelectedIndex(this.collide.sdIndex);
+                this.onSetSelectedIndex(this.collide.sdIndex);
             }
         }
 
