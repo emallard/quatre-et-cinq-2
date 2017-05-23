@@ -81,6 +81,7 @@ export class ImportComponent implements OnInit {
 
     }
 
+    firstSelect = true;
     select(importedSvg:importedSvg)
     {
         this.importedSvgs.forEach(x => x.isActive = false);
@@ -89,6 +90,14 @@ export class ImportComponent implements OnInit {
         var index = this.importedSvgs.indexOf(importedSvg);
         console.log('index ' + index);
         this.editor.setSelectedSvgIndex(index, ()=>{});
+
+        if (this.firstSelect)
+        {
+            this.firstSelect = false;
+            this.edService.editeurComponent.showModifyToolbar();
+            this.edService.editeurComponent.editorControllers.setSelectController();
+        }
+       
         //this.editor.importSvg(importedSvg.content,()=>{});
     }
 
