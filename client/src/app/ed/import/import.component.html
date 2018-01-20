@@ -14,7 +14,7 @@ SVGs importés:
 
     <button style="margin:5px" class="btn btn-default" (click)="importedSvg.onClick()" data-bind="css : { 'btn-active-border': isActive }">
       <div style="float:left">
-          <img style="max-width:100px;max-height:100px" [src]="sanitizer.bypassSecurityTrustResourceUrl(importedSvg.src)">
+          <img style="max-width:100px;max-height:100px;min-width:100px;min-height:100px" [src]="sanitizer.bypassSecurityTrustResourceUrl(importedSvg.src)">
       </div>
       <!--
       <div style="float:right">
@@ -25,3 +25,10 @@ SVGs importés:
       -->
   </button>
 </div>
+
+Selection :
+<!--
+    <img style="max-width:100px;max-height:100px;min-width:100px;min-height:100px" [src]="sanitizer.bypassSecurityTrustResourceUrl(importedSvg.src)">
+<br/>
+-->
+<button style="margin:5px" class="btn btn-default" (click)="decomposerSelection()">Decomposer</button>

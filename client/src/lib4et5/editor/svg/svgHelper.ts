@@ -1,6 +1,7 @@
 import { styleAttribute } from '../../tools/styleAttribute';
 import { arrayFind } from "../../tools/jsFunctions";
 import { vec2 } from "gl-matrix";
+import { loadImage } from "../../tools/loadImage";
 
     export class svgHelper
     {
@@ -33,11 +34,21 @@ import { vec2 } from "gl-matrix";
             img.onload = () => {
                 this.imgWidth = img.width;
                 this.imgHeight = img.height;
-                console.log(this.imgWidth, this.imgHeight);
+                //console.log('svgHelper dimensions : ', this.imgWidth, this.imgHeight);
                 done();
             }
             img.src = "data:image/svg+xml;base64," + btoa(this.contentSvg);
 
+        }
+
+        async setSvgRootElement(content:string, svgRootElement:HTMLElement) : Promise<void>
+        {
+            this.contentSvg = content;
+            this.svgRootElement = svgRootElement;
+            var img = await loadImage("data:image/svg+xml;base64," + btoa(this.contentSvg));
+            this.imgWidth = img.width;
+            this.imgHeight = img.height;
+            console.log('svgHelper setSvgRootElement dimensions : ', this.imgWidth, this.imgHeight);
         }
 
         getElementsId():string[]
@@ -74,6 +85,51 @@ import { vec2 } from "gl-matrix";
                 done();
             }
             img.src = "data:image/svg+xml;base64," + btoa(svg_xml);
+        }
+
+        async drawOnlyElement(element:SVGElement) : Promise<string> {
+
+            // set all hidden
+            for (var i=0; i < this.svgRootElement.childNodes.length; ++i)
+            {
+                var child = this.svgRootElement.childNodes[i];
+                if (child instanceof SVGGraphicsElement)
+                {
+                    this.setChildrenVisible(child, false);
+                }
+            }
+            
+            // set all children and parents from element visible.
+            this.setChildrenVisible(element, true);
+            this.setParentsVisible(element, true);
+
+            this.canvas.width = this.imgWidth;
+            this.canvas.height = this.imgHeight;
+
+            var ctx = this.canvas.getContext('2d');
+            ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
+            var svg_xml = (new XMLSerializer()).serializeToString(this.svgRootElement);
+
+            return "data:image/svg+xml;base64," + btoa(svg_xml);
+        }
+
+
+        setParentsVisible(element:SVGElement, visible : boolean) {
+            this.setVisible(element, visible ? 'visible' : 'hidden' );
+            if (element.parentElement != null && element.parentElement instanceof SVGGraphicsElement)
+                this.setParentsVisible(element.parentElement, visible);
+        }
+
+        setChildrenVisible(element:SVGElement, visible : boolean) {
+            this.setVisible(element, visible ? 'visible' : 'hidden' );
+            for (var i=0; i < element.childNodes.length; ++i)
+            {
+                var child = element.childNodes[i];
+                if (child instanceof SVGGraphicsElement)
+                {
+                    this.setChildrenVisible(child, visible);
+                }
+            }
         }
 
         private setVisible(elt:SVGElement, v:string)

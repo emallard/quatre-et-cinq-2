@@ -21,6 +21,8 @@ import { sdUnion } from '../scene/sdUnion';
 import { sdSubtraction } from '../scene/sdSubtraction';
 import { vec3 } from "gl-matrix";
 import {saveAs as importedSaveAs} from "file-saver";
+import { svgDecomposition } from "./svg/svgDecomposition";
+import { svgImporter2 } from "./svg/svgImporter2";
 
 declare var zip;
 
@@ -33,6 +35,8 @@ declare var zip;
         hardwareRenderer:hardwareRenderer = injectNew(hardwareRenderer);
         svgImporter: svgImporter = inject(svgImporter);
         texturePacker: texturePacker = inject(texturePacker);
+        svgDecomposition:svgDecomposition = inject(svgDecomposition);
+        svgImporter2 : svgImporter2 = inject(svgImporter2);
 
         exportSTL:exportSTL = inject(exportSTL);
         exportOBJ:exportOBJ = inject(exportOBJ);
@@ -54,6 +58,7 @@ declare var zip;
         
         loadResourcesAndInit(containerElt:HTMLElement, success:()=>void)
         {
+            this.editorControllers.setSelectController();
             resources.loadAll(() => this.init(containerElt, success)); 
         }
 
@@ -122,6 +127,16 @@ declare var zip;
         getCamera() {
             return this.renderSettings.camera;
         }
+
+
+
+        updateSvgDecomposition() {
+            for (let part of this.svgDecomposition.parts) {
+
+            }
+        }
+
+
 
         addSvg(svgContent:string)
         {
@@ -211,6 +226,7 @@ declare var zip;
                 this.sdUnion.array.push(this.sdGround);
             
             var objs = this.workspace.editorObjects;
+            console.log('update scene : ' + this.workspace.editorObjects.length) + 'object(s)';
             for (var i=0; i < objs.length; ++i)
             {
                 if (!objs[i].isHole)
@@ -384,5 +400,20 @@ declare var zip;
                     zipWriter.close(done);
                 });
             }, (msg) =>  console.error(msg));
+        }
+
+        async decomposeSelection() {
+            
+            
+            var selectedPart = this.svgDecomposition.parts[this.workspace.selectedIndex];
+            await this.svgDecomposition.ungroup(selectedPart.svgElement);
+            await this.svgDecomposition.debugParts();
+
+            this.workspace.editorObjects = [];
+            this.workspace.selectedIndex = -1;
+            this.svgImporter2.importDecompositionInWorkspace(this.workspace, this.svgDecomposition);
+            
+
+            this.setUpdateFlag();
         }
     }

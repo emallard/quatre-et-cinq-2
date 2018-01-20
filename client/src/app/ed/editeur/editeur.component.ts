@@ -1,8 +1,8 @@
 import { editorControllers } from '../../../lib4et5/editor/editorControllers';
 import { Component, OnInit } from '@angular/core';
-import { resources } from "lib4et5/tools/resources";
-import { editor } from "lib4et5/editor/editor";
-import { EdService } from "app/ed/edService";
+import { resources } from "../../../lib4et5/tools/resources";
+import { editor } from "../../../lib4et5/editor/editor";
+import { EdService } from "../../ed/edService";
 
 declare var zip;
 

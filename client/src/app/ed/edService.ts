@@ -1,8 +1,9 @@
 import { ProfileComponent } from './profile/profile.component';
 import { EditeurComponent } from './editeur/editeur.component';
 import { Injectable } from '@angular/core';
-import { injector } from "lib4et5/tools/injector";
-import { editor } from "lib4et5/editor/editor";
+import { injector } from "../../lib4et5/tools/injector";
+import { editor } from "../../lib4et5/editor/editor";
+
 
 @Injectable()
 export class EdService {
@@ -15,7 +16,7 @@ export class EdService {
         
     }
     
-    editor()
+    editor() : editor
     {
         if (this._editor == null)
         {

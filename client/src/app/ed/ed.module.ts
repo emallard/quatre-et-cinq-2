@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule }   from '@angular/router';
 import { MouseWheelDirective } from './mouse-wheel.directive';
 import { PrintComponent } from './print/print.component';
-import { EditComponent } from './edit/edit.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileExamplesComponent } from './profile-examples/profile-examples.component';
 
@@ -22,7 +21,6 @@ import { ProfileExamplesComponent } from './profile-examples/profile-examples.co
     ImportComponent,
     MouseWheelDirective,
     PrintComponent,
-    EditComponent,
     ProfileComponent,
     ProfileExamplesComponent
   ],

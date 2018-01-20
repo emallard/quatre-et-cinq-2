@@ -6,6 +6,7 @@ import { bsplineDrawer } from './bsplineDrawer';
 import { lineDrawer } from './lineDrawer';
 import { float32ArrayToArray } from '../tools/dto';
 import { vec3, mat4, vec4 } from "gl-matrix";
+declare var $;
 
     export class editorObject
     {
@@ -158,7 +159,8 @@ import { vec3, mat4, vec4 } from "gl-matrix";
             this.top.drawUserCanvasForTop(img, bounds, 0.1);
             this.top.update();
             
-            //$('.debug').append(this.top.canvas);
+            //$('.debug').append(img);
+            $('.debug').append(this.top.canvas);
             //this.profile.debugInfoInCanvas();
             //$(".debug")[0].appendChild(this.profile.canvas);
         }

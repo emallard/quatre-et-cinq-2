@@ -3,6 +3,7 @@ import { editor } from '../../../lib4et5/editor/editor';
 import { EdService } from '../edService';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import { loadAsText } from "../../../lib4et5/tools/loadAsText";
 
 @Component({
     selector: 'app-import',
@@ -47,38 +48,28 @@ export class ImportComponent implements OnInit {
         this.readImage(file);
     }
 
-    readImage(file:File)
+    async readImage(file:File) : Promise<void>
     {
-        var reader = new FileReader();
+        if (!file)
+            return;
 
-        reader.onload = (event) => {
+        var text = await loadAsText(file);
             
-            /*
-            this.importedContent = reader.result;
-            this.editor.importSvg(this.importedContent,    
-                ()=>{}//this.editor.setSelectedIndex(0)
-            );
-            */
-            var newSvg = new importedSvg();
-            newSvg.importComponent = this;
-            newSvg.src = "data:image/svg+xml;base64," + btoa(reader.result);
-            newSvg.content = reader.result;
-            this.importedSvgs.push(newSvg);
+        /*
+        this.importedContent = reader.result;
+        this.editor.importSvg(this.importedContent,    
+            ()=>{}//this.editor.setSelectedIndex(0)
+        );
+        */
+        var newSvg = new importedSvg();
+        newSvg.importComponent = this;
+        newSvg.src = "data:image/svg+xml;base64," + btoa(text);
+        newSvg.content = text;
+        this.importedSvgs.push(newSvg);
 
-            this.editor.addSvg(reader.result);
-            //if (this.importedSvgs.length == 1)
-            this.select(newSvg);
-        }
-        
-        // when the file is read it triggers the onload event above.
-        if (file)
-        {
-            reader.readAsText(file);
-        }
-
-
-
-
+        //this.editor.addSvg(reader.result);
+        //this.select(newSvg);
+        await this.initDecomposition(text);
     }
 
     firstSelect = true;
@@ -104,6 +95,16 @@ export class ImportComponent implements OnInit {
     remove(importedSvg:importedSvg)
     {
         arrayRemove(this.importedSvgs, importedSvg)
+    }
+
+    async initDecomposition(text:string) {
+        await this.editor.svgDecomposition.setSvg(text);
+        this.editor.svgImporter2.importDecompositionInWorkspace(this.editor.workspace, this.editor.svgDecomposition);
+        this.editor.setUpdateFlag();
+    }
+    decomposerSelection()
+    {
+        this.editor.decomposeSelection();
     }
 }
 

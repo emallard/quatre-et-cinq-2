@@ -118,7 +118,8 @@ export class distanceField
         isPixelSet(data:any, width:number, height:number, i:number, j:number):boolean
         {
             var q = 4 * ((height-1 - j) * width + i);
-            return (data[q] != 255 || data[q+1] != 255 || data[q+2] != 255) && data[q+3] != 0;
+            //return (data[q] != 255 || data[q+1] != 255 || data[q+2] != 255) && data[q+3] != 0;
+            return data[q+3] != 0;
         }
 
         isBorderImageData(data:any, width:number, height:number, i:number, j:number):boolean

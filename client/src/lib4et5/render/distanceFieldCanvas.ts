@@ -100,6 +100,7 @@ import { vec4 } from "gl-matrix";
             var ctx = this.canvas.getContext('2d');
             ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+            //console.log('draw to distancefield canvas ' , 0, 0, img.width, img.height, offsetX, offsetY, newImgWidth, newImgHeight);
             ctx.drawImage(img, 0, 0, img.width, img.height, offsetX, offsetY, newImgWidth, newImgHeight);
 
             // draw left margin if profile
